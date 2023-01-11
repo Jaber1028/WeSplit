@@ -12,9 +12,13 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
     
+    // Used to add a Done button, hiding the keyboard
+    @FocusState private var amountIsFocused: Bool
+    
     let tipPercentages = [10, 15, 20, 25, 0]
     
     var totalPerPerson: Double {
+        // Calculates Tip and splits it per person
         let peopleCount = Double(numberOfPeople + 1)
         let tipSelection = Double (tipPercentage)
         
@@ -29,8 +33,10 @@ struct ContentView: View {
         NavigationStack {
             Form {
                 Section {
+                    // Insert Check Inital Cost
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
                     
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(1..<100) {
@@ -54,7 +60,18 @@ struct ContentView: View {
                 Section {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
-            }
+            } .navigationTitle("WeSplit")
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        // Moves button to the right
+                        // Convential IOS placement
+                        Spacer()
+                        
+                        Button("Done") {
+                            amountIsFocused = false
+                        }
+                    }
+                }
         }
     }
 }
