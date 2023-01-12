@@ -12,14 +12,21 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
     
-    // Used to add a Done button, hiding the keyboard
-    @FocusState private var amountIsFocused: Bool
+    // Used to reduce duplicate code and compute total cost
+    var peopleCount: Double {
+        return Double (numberOfPeople + 1)
+    }
     
-    let tipPercentages = [10, 15, 20, 25, 0]
+    // Used to reduce duplicate code
+    var currencyFormat: FloatingPointFormatStyle<Double>.Currency {
+        return .currency(code: Locale.current.currency?.identifier ?? "USD")
+    }
+    
+    // Used to add a Done button, hiding the keyboard`
+    @FocusState private var amountIsFocused: Bool
     
     var totalPerPerson: Double {
         // Calculates Tip and splits it per person
-        let peopleCount = Double(numberOfPeople + 1)
         let tipSelection = Double (tipPercentage)
         
         let tipValue = checkAmount / 100 * tipSelection
@@ -34,7 +41,7 @@ struct ContentView: View {
             Form {
                 Section {
                     // Insert Check Inital Cost
-                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                    TextField("Amount", value: $checkAmount, format: currencyFormat)
                         .keyboardType(.decimalPad)
                         .focused($amountIsFocused)
                     
@@ -48,17 +55,24 @@ struct ContentView: View {
                 
                 Section {
                     Picker("Tip Percentage", selection: $tipPercentage) {
-                        ForEach(tipPercentages, id: \.self) {
+                        ForEach(0..<101) {
                             Text($0, format: .percent)
                         }
                     }
-                    .pickerStyle(.segmented)
                 } header: {
                     Text("How much do you want to tip")
                 }
                 
                 Section {
-                    Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                    Text(totalPerPerson, format: currencyFormat)
+                } header: {
+                    Text("Amount per person")
+                }
+                
+                Section {
+                    Text(totalPerPerson * peopleCount, format: currencyFormat)
+                } header: {
+                    Text("Total amount for check")
                 }
             } .navigationTitle("WeSplit")
                 .toolbar {
