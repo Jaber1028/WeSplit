@@ -11,11 +11,11 @@ Then, choose the number of people and the amount of tip to apply.
 Done! The results of both the total cost and the amount per person will be automatically calculated below.
 
 ### Tools used:
-FocusedState/Toolbar: To hid the keyboard after the input is inserted (Button is used for "Done" functionality).
-NavigationStack: to prevent scrolling on past IOS devices from going past safe area.
-TextField: to input cost, format cost to user's local currency type.
-Picker: to loop through all possible percentages for tax and give the ability to choose up to 99 people to split the check with.
-Forms/Section: Neatly split each section with headers to give a easier look for users.
+* FocusedState/Toolbar: To hid the keyboard after the input is inserted (Button is used for "Done" functionality).
+* NavigationStack: to prevent scrolling on past IOS devices from going past safe area.
+* TextField: to input cost, format cost to user's local currency type.
+* Picker: to loop through all possible percentages for tax and give the ability to choose up to 99 people to split the check with.
+* Forms/Section: Neatly split each section with headers to give a easier look for users.
 
 
 
