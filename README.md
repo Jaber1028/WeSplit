@@ -1,5 +1,7 @@
 # WeSplit
 ## A Simple Check Splitting app
+A simple tool to help calculate the cost of a check after a given tax. Can also be used to find cost per person, if the check
+needs to be equally split per person.
 
 Built with Swift & SwiftUI, inspired from #100DaysOfSwift by Hacking With Swift
 
